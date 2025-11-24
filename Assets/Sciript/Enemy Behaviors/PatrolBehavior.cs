@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolBehavior : Behavior
+public class PatrolBehavior : MonoBehaviour, IBehavior
 {
     [SerializeField] private WaypointRoute _route;
 
-    public override bool IsEngaged {get; set;}
+    public bool IsEngaged {get; set;}
     private int _currentWaypointIndex = 0;
 
     public void SetRoute (WaypointRoute route)
@@ -22,7 +22,7 @@ public class PatrolBehavior : Behavior
         }
     }
 
-    public override void Act ()
+    public void Act ()
     {
         Mover.MoveToTarget(gameObject, _route.Waypoints[_currentWaypointIndex], 5f);
 
@@ -30,5 +30,15 @@ public class PatrolBehavior : Behavior
         {
             _currentWaypointIndex = (_currentWaypointIndex + 1) % _route.Waypoints.Count;
         }
+    }
+
+    public void Engage ()
+    {
+        IsEngaged = true;
+    }
+
+    public void Disengage ()
+    {
+        IsEngaged = false;
     }
 }

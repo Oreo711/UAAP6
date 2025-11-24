@@ -47,5 +47,6 @@ MonoBehaviour:
   _spawnCooldown: 10
   _enemyPrefab: {fileID: 6139072248917713116, guid: cd3ed2c054d6a284aa21affe1994e784, type: 3}
   _passiveBehavior: 0
-  _activeBehavior: 1
+  _activeBehavior: 0
   _patrolRoute: {fileID: 0}
+  _player: {fileID: 0}

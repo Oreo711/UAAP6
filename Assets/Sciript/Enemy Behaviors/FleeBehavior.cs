@@ -1,27 +1,48 @@
 using System;
 using UnityEngine;
 
-public class FleeBehavior : Behavior
+public class FleeBehavior : MonoBehaviour, IBehavior
 {
 	[SerializeField] private float _speed = 5f;
 
-	private Vector3 _currentDirection;
+	private Transform _target;
+	private Vector3   _currentDirection;
+	private Vector3   _currentDistance;
+	private float    _fleeDistance = 15f;
 
-	public override bool IsEngaged {get; set;}
+	public bool IsEngaged {get; set;}
 
-	private void OnTriggerStay (Collider other)
+	public void SetTarget (Transform target)
+	{
+		_target = target;
+	}
+
+	private void Update ()
 	{
 		if (IsEngaged)
 		{
-			_currentDirection = (transform.position - other.transform.position).normalized;
+			_currentDirection = (transform.position - _target.transform.position).normalized;
 			_currentDirection.y = 0;
 
 			Act();
 		}
 	}
 
-	public override void Act ()
+	public void Act ()
 	{
-		Mover.MoveInDirection(gameObject, _currentDirection, _speed);
+		if (Vector3.Distance(transform.position, _target.transform.position) <= _fleeDistance)
+		{
+			Mover.MoveInDirection(gameObject, _currentDirection, _speed);
+		}
+	}
+
+	public void Engage ()
+	{
+		IsEngaged = true;
+	}
+
+	public void Disengage ()
+	{
+		IsEngaged = false;
 	}
 }

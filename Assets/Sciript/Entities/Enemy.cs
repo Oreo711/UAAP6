@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Behavior _passiveBehavior;
-    private Behavior _activeBehavior;
+    private IBehavior _passiveBehavior;
+    private IBehavior _activeBehavior;
 
-    public void SetBehaviors (Behavior passive, Behavior active)
+    public void SetBehaviors (IBehavior passive, IBehavior active)
     {
         _passiveBehavior = passive;
         _activeBehavior = active;
@@ -35,13 +35,13 @@ public class Enemy : MonoBehaviour
 
     private void Engage ()
     {
-        _passiveBehavior.IsEngaged = false;
-        _activeBehavior.IsEngaged  = true;
+        _passiveBehavior.Disengage();
+        _activeBehavior.Engage();
     }
 
     private void Disengage ()
     {
-        _passiveBehavior.IsEngaged = true;
-        _activeBehavior.IsEngaged  = false;
+        _passiveBehavior.Engage();
+        _activeBehavior.Disengage();
     }
 }

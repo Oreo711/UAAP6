@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class SuicideBehavior : Behavior
+public class SuicideBehavior : MonoBehaviour, IBehavior
 {
-    public override bool IsEngaged {get; set;}
+    public bool IsEngaged {get; set;}
 
     private void Update ()
     {
@@ -13,8 +13,18 @@ public class SuicideBehavior : Behavior
         }
     }
 
-    public override void Act ()
+    public void Act ()
     {
         Destroy(gameObject);
+    }
+
+    public void Engage ()
+    {
+        IsEngaged = true;
+    }
+
+    public void Disengage ()
+    {
+        IsEngaged = false;
     }
 }
