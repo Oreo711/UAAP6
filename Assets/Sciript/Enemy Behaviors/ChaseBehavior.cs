@@ -16,11 +16,10 @@ public class ChaseBehavior : MonoBehaviour, IBehavior
 		_target = target;
 	}
 
-	private void OnTriggerStay (Collider other)
+	private void Update ()
 	{
 		if (IsEngaged)
 		{
-			_target = other.transform;
 			Act();
 		}
 	}
