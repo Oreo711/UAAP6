@@ -3,7 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public class WanderBehavior : MonoBehaviour, IBehavior
+public class WanderBehavior : IBehavior
 {
 	[SerializeField] private float   _speed = 2f;
 	[SerializeField] private float   _changeDirectionCooldown = 1f;
@@ -11,14 +11,17 @@ public class WanderBehavior : MonoBehaviour, IBehavior
 	private float   _remainingCooldown;
 	private Vector3 _currentDirection;
 
-	public bool IsEngaged {get; set;}
+	private GameObject _bearer;
 
-	private void Awake ()
+	public WanderBehavior (GameObject bearer)
 	{
+		_bearer            = bearer;
 		_remainingCooldown = _changeDirectionCooldown;
 	}
 
-	private void Update ()
+	public bool IsEngaged {get; set;}
+
+	public void Update ()
 	{
 		if (IsEngaged)
 		{
@@ -36,7 +39,7 @@ public class WanderBehavior : MonoBehaviour, IBehavior
 			_remainingCooldown = _changeDirectionCooldown;
 		}
 
-		Mover.MoveInDirection(gameObject, _currentDirection, _speed);
+		Mover.MoveInDirection(_bearer, _currentDirection, _speed);
 	}
 
 	public void Engage ()

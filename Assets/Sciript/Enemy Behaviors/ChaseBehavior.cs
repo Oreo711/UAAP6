@@ -1,22 +1,25 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class ChaseBehavior : MonoBehaviour, IBehavior
+public class ChaseBehavior : IBehavior
 {
-	[SerializeField] private float _speed               = 5f;
-	[SerializeField] private float _chaseEndDistance    = 2f;
-	[SerializeField] private float _chaseEngageDistance = 15f;
+	private float _speed            = 5f;
+	private float _chaseEndDistance = 2f;
+	private float _chaseEngageDistance = 15f;
 
-	private Transform _target;
+	private Transform  _target;
+	private GameObject _bearer;
+
+	public ChaseBehavior (GameObject bearer, Transform target)
+	{
+		_target = target;
+		_bearer = bearer;
+	}
 
 	public bool IsEngaged {get; set;}
 
-	public void SetTarget (Transform target)
-	{
-		_target = target;
-	}
-
-	private void Update ()
+	public void Update ()
 	{
 		if (IsEngaged)
 		{
@@ -26,11 +29,11 @@ public class ChaseBehavior : MonoBehaviour, IBehavior
 
 	public void Act ()
 	{
-		Vector3 distance = _target.position - transform.position;
+		Vector3 distance = _target.position - _bearer.transform.position;
 
 		if (distance.magnitude > _chaseEndDistance && distance.magnitude < _chaseEngageDistance)
 		{
-			Mover.MoveToTarget(gameObject, _target, _speed);
+			Mover.MoveToTarget(_bearer, _target, _speed);
 		}
 	}
 

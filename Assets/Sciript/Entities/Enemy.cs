@@ -17,6 +17,12 @@ public class Enemy : MonoBehaviour
         Disengage();
     }
 
+    private void Update ()
+    {
+        _passiveBehavior.Update();
+        _activeBehavior.Update();
+    }
+
     private void OnTriggerEnter (Collider other)
     {
         if (other.TryGetComponent(out Player player))
@@ -43,5 +49,10 @@ public class Enemy : MonoBehaviour
     {
         _passiveBehavior.Engage();
         _activeBehavior.Disengage();
+    }
+
+    public void Destroy ()
+    {
+        Destroy(gameObject);
     }
 }

@@ -37,38 +37,6 @@ public class EnemySpawner : MonoBehaviour
         IBehavior   passiveBehavior = GetEnemyPassiveBehavior(enemyInstance);
         IBehavior   activeBehavior = GetEnemyActiveBehavior(enemyInstance);
 
-        // switch (_passiveBehavior)
-        // {
-        //     case PassiveBehaviors.idle:
-        //         passiveBehavior = enemyInstance.AddComponent<IdleBehavior>();
-        //         break;
-        //     case PassiveBehaviors.patrol:
-        //         PatrolBehavior behavior = enemyInstance.AddComponent<PatrolBehavior>();
-        //         behavior.SetRoute(_patrolRoute);
-        //         passiveBehavior = behavior;
-        //         break;
-        //     case PassiveBehaviors.wander:
-        //         passiveBehavior = enemyInstance.AddComponent<WanderBehavior>();
-        //         break;
-        //     default:
-        //         throw new Exception("Invalid behavior index");
-        // }
-        //
-        // switch (_activeBehavior)
-        // {
-        //     case ActiveBehaviors.flee:
-        //         activeBehavior = enemyInstance.AddComponent<FleeBehavior>();
-        //         break;
-        //     case ActiveBehaviors.chase:
-        //         activeBehavior = enemyInstance.AddComponent<ChaseBehavior>();
-        //         break;
-        //     case ActiveBehaviors.suicide:
-        //         activeBehavior = enemyInstance.AddComponent<SuicideBehavior>();
-        //         break;
-        //     default:
-        //         throw new Exception("Invalid behavior index");
-        // }
-
         Enemy enemy = enemyInstance.GetComponent<Enemy>();
 
         enemy.SetBehaviors(passiveBehavior, activeBehavior);
@@ -79,13 +47,11 @@ public class EnemySpawner : MonoBehaviour
         switch (_passiveBehavior)
         {
             case PassiveBehaviors.idle:
-                return enemyInstance.AddComponent<IdleBehavior>();
+                return new IdleBehavior();
             case PassiveBehaviors.patrol:
-                PatrolBehavior patrolBehavior = enemyInstance.AddComponent<PatrolBehavior>();
-                patrolBehavior.SetRoute(_patrolRoute);
-                return patrolBehavior;
+                return new PatrolBehavior(enemyInstance, _patrolRoute);
             case PassiveBehaviors.wander:
-                return enemyInstance.AddComponent<WanderBehavior>();
+                return new WanderBehavior(enemyInstance);
             default:
                 throw new Exception("Invalid behavior index");
         }
@@ -96,15 +62,11 @@ public class EnemySpawner : MonoBehaviour
         switch (_activeBehavior)
         {
             case ActiveBehaviors.flee:
-                FleeBehavior fleeBehavior = enemyInstance.AddComponent<FleeBehavior>();
-                fleeBehavior.SetTarget(_player.transform);
-                return fleeBehavior;
+                return new FleeBehavior(enemyInstance, _player.transform);
             case ActiveBehaviors.chase:
-                ChaseBehavior chaseBehavior = enemyInstance.AddComponent<ChaseBehavior>();
-                chaseBehavior.SetTarget(_player.transform);
-                return chaseBehavior;
+                return new ChaseBehavior(enemyInstance, _player.transform);
             case ActiveBehaviors.suicide:
-                return enemyInstance.AddComponent<SuicideBehavior>();
+                return new SuicideBehavior(enemyInstance);
             default:
                 throw new Exception("Invalid behavior index");
         }

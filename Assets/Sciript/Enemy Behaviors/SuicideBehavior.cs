@@ -1,11 +1,18 @@
 using System;
 using UnityEngine;
 
-public class SuicideBehavior : MonoBehaviour, IBehavior
+public class SuicideBehavior : IBehavior
 {
+    private GameObject _bearer;
+
+    public SuicideBehavior (GameObject bearer)
+    {
+        _bearer = bearer;
+    }
+
     public bool IsEngaged {get; set;}
 
-    private void Update ()
+    public void Update ()
     {
         if (IsEngaged)
         {
@@ -15,7 +22,8 @@ public class SuicideBehavior : MonoBehaviour, IBehavior
 
     public void Act ()
     {
-        Destroy(gameObject);
+        Enemy enemy = _bearer.GetComponent<Enemy>();
+        enemy.Destroy();
     }
 
     public void Engage ()

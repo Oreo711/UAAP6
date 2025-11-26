@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-public class IdleBehavior : MonoBehaviour, IBehavior
+public class IdleBehavior : IBehavior
 {
 	public bool IsEngaged {get; set;}
 
-	private void Update ()
+	public void Update ()
 	{
 		if (IsEngaged)
 		{

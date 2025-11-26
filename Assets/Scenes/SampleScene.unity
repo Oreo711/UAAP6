@@ -890,6 +890,14 @@ PrefabInstance:
       propertyPath: _patrolRoute
       value: 
       objectReference: {fileID: 2083632877}
+    - target: {fileID: 9185415102272156419, guid: 76950b852c1ad734d82f73867e7ff6e9, type: 3}
+      propertyPath: _activeBehavior
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185415102272156419, guid: 76950b852c1ad734d82f73867e7ff6e9, type: 3}
+      propertyPath: _passiveBehavior
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
